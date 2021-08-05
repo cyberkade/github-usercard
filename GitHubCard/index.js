@@ -1,3 +1,113 @@
+const body = document.body;
+const cards = body.querySelector('.cards');
+
+
+//REQUESTING & COLLECTING DATA FROM MY REQUEST & LOGGING DATA TO INSPECT/STUDY
+console.log(axios);
+axios.get('https://api.github.com/users/cyberkade')
+  .then(res => {
+    console.log(res)
+    cards.appendChild(cardCreator(res));
+  })
+// console.log(response);
+
+//CREATING ARRAY AND REQUEST FUNCTION TO ITERATE THROUGH ARRAY AND APPEND EACH PROFILE TO PAGE
+// * Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API 
+// after it has received your data and create a card for each of your followers. Hint: you can chain promises.
+
+const followersArray = [];
+// FETCHING
+const fetchData = (username) => {
+  axios.get(`https://api.github.com/users/${username}`)
+  .then(res => {
+    cards.appendChild(cardCreator(res));
+  })
+}
+
+const fetchFollowers = (callback) => {
+  axios.get(`https://api.github.com/users/cyberkade/followers`)
+  .then( res => {
+    console.log(callback);
+    res.data.forEach(item => followersArray.push(item.login))
+    followersArray.forEach(item => callback(item))
+  })
+}
+
+fetchFollowers(fetchData);
+
+const cardCreator = (response) => {
+  //Create Elements
+  const card = document.createElement('div');
+  const image = document.createElement('img');
+  const info = document.createElement('div');
+  const h3 = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const profileLink = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+  const button = document.createElement('button');
+  const calender = document.createElement('img'); 
+
+  //Assign Classes/Attributes
+  card.className = 'card';
+  image.className = 'profile';
+  image.src = response.data['avatar_url'];
+  info.className = 'card-info dropdown';
+  h3.className = 'name';
+  username.className = 'username';
+  profileLink.href = response.data['html_url'];
+  button.className = 'preClick wiggle';
+  calender.className = 'calender hide';
+  calender.src = `https://ghchart.rshah.org/${response.data.login}`;
+  calender.alt = `${response.data.login}'s GitHub Chart`
+
+
+  //Style Elements 
+  h3.style.textAlign = 'center';
+  username.style.textAlign = 'center';
+
+  //APPEND TEXT CONTENT
+  h3.textContent = response.data.name;
+  username.textContent = response.data.login;
+  if(response.data.location === null){
+  location.textContent = ``;
+  }else {
+  location.textContent = `Location: ${response.data.location}`;
+  }
+  profile.textContent = 'Profile: ';
+  profileLink.textContent = response.data['html_url'];
+  followers.textContent = `Followers: ${response.data.followers}`;
+  following.textContent = `Following: ${response.data.following}`;
+  bio.textContent = response.data.bio;
+
+  //ADDING CLICK EVENT TO BUTTON FOR A DROPDOWN AFFECT
+button.addEventListener('click', (e) => {
+  button.classList.toggle('postClick');
+  button.classList.toggle('preClick');
+  // card.classList.toggle('dropdown');
+  calender.classList.toggle('rotate');
+  calender.classList.toggle('hide')
+})
+
+  //APPEND/PREPEND ELEMENTS
+  card.prepend(image);
+  card.prepend(button);
+  card.appendChild(info);
+  info.appendChild(h3);
+  info.appendChild(username);
+  info.appendChild(location);
+  info.appendChild(profile);
+    profile.appendChild(profileLink);
+  info.appendChild(followers);
+  info.appendChild(following);
+  info.appendChild(bio);
+  card.appendChild(calender);
+  return card;
+};
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -28,7 +138,6 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.

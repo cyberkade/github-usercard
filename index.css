@@ -95,20 +95,21 @@ body {
   width: 100%;
   padding: 20px;
   display: flex;
+  flex-flow: column;
+  align-items: center;
   border-radius: 5px;
   box-shadow: 0 1px 6px -2px #000;
   background-color: #FFF;
   margin-bottom: 30px;
 }
 
-.card img {
+.profile {
   width: 150px;
   height: 150px;
   border-radius: 3px;
-  margin-right: 20px;
 }
 
-.card .name {
+.name {
   font-size: 3.4rem;
 }
 
@@ -123,5 +124,130 @@ body {
   margin: 3px 0 10px;
 }
 
+.calender {
+  width: 90%; height : auto;
+  margin-top: 10px;
+}
 
+.preClick {
+  width: 30px; height: 30px;
+  align-self: flex-end;
+  border: none;
+  border-radius: 50%;
+  background-color: #1fc8db;
+  background-image: url('../github-usercard/images/menu.png');
+  background-size: cover;
+  transition: background-color 200ms ease-in-out, background-image 300ms;
+}
+
+.preClick:hover {
+  background-color: #1fdb6d;
+  border-radius: 50%;
+}
+
+.postClick {
+  width: 30px; height: 30px;
+  align-self: flex-end;
+  border: none;
+  border-radius: 50%;
+  background-color: #1fdb6d;
+  background-image: url('https://image.flaticon.com/icons/png/128/545/545676.png');
+  background-size: cover;
+  transition: background-color 200ms ease-in-out, background-image 300ms ;
+}
+
+.postClick:hover {
+  background-color: #1fc8db;
+  border-radius: 50%;
+}
+
+.hide {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+.rotate {
+  animation-name: rotate;
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes rotate {
+  0% {
+    transform: scale(0)
+  }
+  80% {
+      transform: scale(1.1)
+  }
+  100% {
+      transform: scale(1)
+  }
+}
+
+.wiggle {
+  box-shadow:  inset -5px 0 5px 0 rgba(0,0,0,.4);
+  backface-visibility: hidden;
+  transform: translateZ(0px);
+  animation-duration: 6000ms;
+  animation-name: wiggle;
+  animation-play-state: running;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  74% {
+    transform: rotate(0deg);
+  }
+  75% {
+    box-shadow:  inset -5px 0 5px 0 rgba(0,0,0,.4);
+    transform: rotate(7deg);
+  }
+  
+  80% {
+    box-shadow:  inset -11px 0 5px 0 rgba(0,0,0,.4);
+    transform: rotate(-14deg);
+  }
+  
+  85% {
+    box-shadow:  inset -5px 0 5px 0 rgba(0,0,0,.4);
+    transform: rotate(4deg);
+  }
+  
+  90% {
+    box-shadow:  inset -8px 0 5px 0 rgba(0,0,0,.4);
+    transform: rotate(-2deg);
+  }
+  
+  95% {
+    box-shadow:  inset -7px 0 5px 0 rgba(0,0,0,.4);
+    transform: rotate(0deg);
+  }
+  100% {
+    box-shadow:  inset -7px 0 5px 0 rgba(0,0,0,.4);
+    transform: rotate(0deg);
+  }
+}
+
+.dropdown {
+  animation: dropdown 400ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+@keyframes dropdown {
+  0% {
+      transform: rotateX(-90deg)
+  }
+  70% {
+      transform: rotateX(20deg) 
+  }
+  100% {
+      transform: rotateX(0deg) 
+  }
+}
 
