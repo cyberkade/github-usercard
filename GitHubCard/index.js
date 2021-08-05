@@ -1,8 +1,38 @@
+const body = document.body;
+const cards = body.querySelector('.cards');
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+//REQUESTING & COLLECTING DATA FROM MY REQUEST & LOGGING DATA TO INSPECT/STUDY
+console.log(axios);
+const response = axios.get('https://api.github.com/users/cyberkade')
+  .then(res => {
+    console.log(res)
+    // cardCreator(res)
+    cards.appendChild(cardCreator(res));
+  })
+  // .catch( (err) => {
+  //   console.error(err);
+  // })
+// const request = (url) => {
+//   return new Promise( (resolve, reject) => {
+//     const data = axios.get(url)
+//     resolve(data);
+//   })
+// }
+// const response = request('https://api.github.com/users/cyberkade')
+//   .then(data => {
+//   console.log(data);
+//   return data;
+//   })
+//   .catch(error => {
+//    console.log(error);
+//   })
+
+// console.log(response);
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -49,6 +79,54 @@ const followersArray = [];
       </div>
     </div>
 */
+const cardCreator = (response) => {
+  console.log(response);
+    //Create Elements
+  const card = document.createElement('div');
+  const image = document.createElement('img');
+  const info = document.createElement('div');
+  const h3 = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const profileLink = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  //Assign Classes/Attributes
+  card.className = 'card';
+  image.src = response.data['avatar_url'];
+  info.className = 'card-info';
+  h3.className = 'name';
+  username.className = 'username';
+  profileLink.href = response.data.url;
+
+  //APPEND TEXT CONTENT
+  h3.textContent = response.data.name;
+  username.textContent = response.data.login;
+  location.textContent = response.data.location;
+  profileLink.textContent = response.data.url;
+  followers.textContent = response.data.followers;
+  following.textContent = response.data.following;
+  bio.textContent = response.data.bio;
+
+  //APPEND/PREPEND ELEMENTS
+  card.appendChild(info);
+  card.prepend(image);
+  info.appendChild(h3);
+  info.appendChild(username);
+  info.appendChild(location);
+  info.appendChild(profile);
+    profile.appendChild(profileLink);
+  info.appendChild(followers);
+  info.appendChild(following);
+  info.appendChild(bio);
+  // cards.appendChild(card);
+  return card;
+  
+};
+// cardCreator(response);
 
 /*
   List of LS Instructors Github username's:
