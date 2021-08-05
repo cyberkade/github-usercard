@@ -8,10 +8,9 @@ const cards = body.querySelector('.cards');
 
 //REQUESTING & COLLECTING DATA FROM MY REQUEST & LOGGING DATA TO INSPECT/STUDY
 console.log(axios);
-const response = axios.get('https://api.github.com/users/cyberkade')
+axios.get('https://api.github.com/users/cyberkade')
   .then(res => {
     console.log(res)
-    // cardCreator(res)
     cards.appendChild(cardCreator(res));
   })
   // .catch( (err) => {
@@ -58,7 +57,15 @@ const response = axios.get('https://api.github.com/users/cyberkade')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['ManuelLucero', 'bigknell', 'someilam', 'justinfineberg', 'justsml'];
+
+const fetchData = (username) => {
+  axios.get(`https://api.github.com/users/${username}`)
+  .then(res => {
+    cards.appendChild(cardCreator(res));
+  })
+}
+followersArray.forEach(item => {fetchData(item)})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -80,7 +87,7 @@ const followersArray = [];
     </div>
 */
 const cardCreator = (response) => {
-  console.log(response);
+  // console.log(response);
     //Create Elements
   const card = document.createElement('div');
   const image = document.createElement('img');
@@ -100,20 +107,21 @@ const cardCreator = (response) => {
   info.className = 'card-info';
   h3.className = 'name';
   username.className = 'username';
-  profileLink.href = response.data.url;
+  profileLink.href = response.data['html_url'];
 
   //APPEND TEXT CONTENT
   h3.textContent = response.data.name;
   username.textContent = response.data.login;
   location.textContent = response.data.location;
-  profileLink.textContent = response.data.url;
+  profile.textContent = 'Profile: ';
+  profileLink.textContent = response.data['html_url'];
   followers.textContent = response.data.followers;
   following.textContent = response.data.following;
   bio.textContent = response.data.bio;
 
   //APPEND/PREPEND ELEMENTS
-  card.appendChild(info);
   card.prepend(image);
+  card.appendChild(info);
   info.appendChild(h3);
   info.appendChild(username);
   info.appendChild(location);
@@ -122,11 +130,8 @@ const cardCreator = (response) => {
   info.appendChild(followers);
   info.appendChild(following);
   info.appendChild(bio);
-  // cards.appendChild(card);
   return card;
-  
 };
-// cardCreator(response);
 
 /*
   List of LS Instructors Github username's:
