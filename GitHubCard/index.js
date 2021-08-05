@@ -15,15 +15,25 @@ axios.get('https://api.github.com/users/cyberkade')
 // * Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API 
 // after it has received your data and create a card for each of your followers. Hint: you can chain promises.
 
-const followersArray = ['ManuelLucero', 'bigknell', 'someilam', 'justinfineberg', 'ayv8er'];
-
+const followersArray = [];
+// FETCHING
 const fetchData = (username) => {
   axios.get(`https://api.github.com/users/${username}`)
   .then(res => {
     cards.appendChild(cardCreator(res));
   })
 }
-followersArray.forEach(item => {fetchData(item)})
+
+const fetchFollowers = (callback) => {
+  axios.get(`https://api.github.com/users/cyberkade/followers`)
+  .then( res => {
+    console.log(callback);
+    res.data.forEach(item => followersArray.push(item.login))
+    followersArray.forEach(item => callback(item))
+  })
+}
+
+fetchFollowers(fetchData);
 
 const cardCreator = (response) => {
   //Create Elements
