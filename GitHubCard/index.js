@@ -15,7 +15,7 @@ axios.get('https://api.github.com/users/cyberkade')
 // * Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API 
 // after it has received your data and create a card for each of your followers. Hint: you can chain promises.
 
-const followersArray = ['ManuelLucero', 'bigknell', 'someilam', 'justinfineberg', 'justsml'];
+const followersArray = ['ManuelLucero', 'bigknell', 'someilam', 'justinfineberg', 'ayv8er'];
 
 const fetchData = (username) => {
   axios.get(`https://api.github.com/users/${username}`)
@@ -38,6 +38,7 @@ const cardCreator = (response) => {
   const followers = document.createElement('p');
   const following = document.createElement('p');
   const bio = document.createElement('p');
+  const button = document.createElement('button');
   const calender = document.createElement('img'); 
 
   //Assign Classes/Attributes
@@ -48,7 +49,8 @@ const cardCreator = (response) => {
   h3.className = 'name';
   username.className = 'username';
   profileLink.href = response.data['html_url'];
-  calender.className = 'calender';
+  button.className = 'preClick wiggle';
+  calender.className = 'calender hide';
   calender.src = `https://ghchart.rshah.org/${response.data.login}`;
   calender.alt = `${response.data.login}'s GitHub Chart`
 
@@ -71,14 +73,16 @@ const cardCreator = (response) => {
   following.textContent = `Following: ${response.data.following}`;
   bio.textContent = response.data.bio;
 
-//   GitHubCalendar(".calendar", response.data.login, { responsive: true });
-//   GitHubCalendar(".calendar", response.data.login, {
-//     proxy (username) {
-//       return fetch(`https://your-proxy.com/github?user=${username}`)
-//     }
-//  }).then(r => r.text())
+  //ADDING CLICK EVENT TO BUTTON FOR A DROPDOWN AFFECT
+button.addEventListener('click', (e) => {
+  button.classList.toggle('postClick');
+  button.classList.toggle('preClick');
+  calender.classList.toggle('hide')
+})
+
   //APPEND/PREPEND ELEMENTS
   card.prepend(image);
+  card.prepend(button);
   card.appendChild(info);
   info.appendChild(h3);
   info.appendChild(username);
