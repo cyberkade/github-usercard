@@ -26,7 +26,7 @@ const fetchData = (username) => {
 followersArray.forEach(item => {fetchData(item)})
 
 const cardCreator = (response) => {
-    //Create Elements
+  //Create Elements
   const card = document.createElement('div');
   const image = document.createElement('img');
   const info = document.createElement('div');
@@ -45,7 +45,7 @@ const cardCreator = (response) => {
   card.className = 'card';
   image.className = 'profile';
   image.src = response.data['avatar_url'];
-  info.className = 'card-info';
+  info.className = 'card-info dropdown';
   h3.className = 'name';
   username.className = 'username';
   profileLink.href = response.data['html_url'];
@@ -77,6 +77,8 @@ const cardCreator = (response) => {
 button.addEventListener('click', (e) => {
   button.classList.toggle('postClick');
   button.classList.toggle('preClick');
+  // card.classList.toggle('dropdown');
+  calender.classList.toggle('rotate');
   calender.classList.toggle('hide')
 })
 

@@ -125,7 +125,7 @@ body {
 }
 
 .calender {
-  width: 100%; height : auto;
+  width: 90%; height : auto;
   margin-top: 10px;
 }
 
@@ -137,7 +137,7 @@ body {
   background-color: #1fc8db;
   background-image: url('../github-usercard/images/menu.png');
   background-size: cover;
-  transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out, background-image 300ms;
 }
 
 .preClick:hover {
@@ -151,9 +151,9 @@ body {
   border: none;
   border-radius: 50%;
   background-color: #1fdb6d;
-  background-image: url('../github-usercard/images/menu.png');
+  background-image: url('https://image.flaticon.com/icons/png/128/545/545676.png');
   background-size: cover;
-  transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out, background-image 300ms ;
 }
 
 .postClick:hover {
@@ -167,23 +167,34 @@ body {
   left: -9999px !important;
 }
 
+.rotate {
+  animation-name: rotate;
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes rotate {
+  0% {
+    transform: scale(0)
+  }
+  80% {
+      transform: scale(1.1)
+  }
+  100% {
+      transform: scale(1)
+  }
+}
+
 .wiggle {
   box-shadow:  inset -5px 0 5px 0 rgba(0,0,0,.4);
   backface-visibility: hidden;
   transform: translateZ(0px);
-  animation-duration: 5000ms;
+  animation-duration: 6000ms;
   animation-name: wiggle;
   animation-play-state: running;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-}
-
-.dropdown {
-  animation-name: dropdown;
-}
-
-@keyframes dropdown {
-  
 }
 
 @keyframes wiggle {
@@ -220,6 +231,23 @@ body {
   100% {
     box-shadow:  inset -7px 0 5px 0 rgba(0,0,0,.4);
     transform: rotate(0deg);
+  }
+}
+
+.dropdown {
+  animation: dropdown 400ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+@keyframes dropdown {
+  0% {
+      transform: rotateX(-90deg)
+  }
+  70% {
+      transform: rotateX(20deg) 
+  }
+  100% {
+      transform: rotateX(0deg) 
   }
 }
 
