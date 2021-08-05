@@ -12,6 +12,9 @@ axios.get('https://api.github.com/users/cyberkade')
 // console.log(response);
 
 //CREATING ARRAY AND REQUEST FUNCTION TO ITERATE THROUGH ARRAY AND APPEND EACH PROFILE TO PAGE
+// * Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API 
+// after it has received your data and create a card for each of your followers. Hint: you can chain promises.
+
 const followersArray = ['ManuelLucero', 'bigknell', 'someilam', 'justinfineberg', 'justsml'];
 
 const fetchData = (username) => {
@@ -23,7 +26,6 @@ const fetchData = (username) => {
 followersArray.forEach(item => {fetchData(item)})
 
 const cardCreator = (response) => {
-  // console.log(response);
     //Create Elements
   const card = document.createElement('div');
   const image = document.createElement('img');
@@ -36,25 +38,45 @@ const cardCreator = (response) => {
   const followers = document.createElement('p');
   const following = document.createElement('p');
   const bio = document.createElement('p');
+  const calender = document.createElement('img'); 
 
   //Assign Classes/Attributes
   card.className = 'card';
+  image.className = 'profile';
   image.src = response.data['avatar_url'];
   info.className = 'card-info';
   h3.className = 'name';
   username.className = 'username';
   profileLink.href = response.data['html_url'];
+  calender.className = 'calender';
+  calender.src = `https://ghchart.rshah.org/${response.data.login}`;
+  calender.alt = `${response.data.login}'s GitHub Chart`
+
+
+  //Style Elements 
+  h3.style.textAlign = 'center';
+  username.style.textAlign = 'center';
 
   //APPEND TEXT CONTENT
   h3.textContent = response.data.name;
   username.textContent = response.data.login;
-  location.textContent = response.data.location;
+  if(response.data.location === null){
+  location.textContent = ``;
+  }else {
+  location.textContent = `Location: ${response.data.location}`;
+  }
   profile.textContent = 'Profile: ';
   profileLink.textContent = response.data['html_url'];
-  followers.textContent = response.data.followers;
-  following.textContent = response.data.following;
+  followers.textContent = `Followers: ${response.data.followers}`;
+  following.textContent = `Following: ${response.data.following}`;
   bio.textContent = response.data.bio;
 
+//   GitHubCalendar(".calendar", response.data.login, { responsive: true });
+//   GitHubCalendar(".calendar", response.data.login, {
+//     proxy (username) {
+//       return fetch(`https://your-proxy.com/github?user=${username}`)
+//     }
+//  }).then(r => r.text())
   //APPEND/PREPEND ELEMENTS
   card.prepend(image);
   card.appendChild(info);
@@ -66,6 +88,7 @@ const cardCreator = (response) => {
   info.appendChild(followers);
   info.appendChild(following);
   info.appendChild(bio);
+  card.appendChild(calender);
   return card;
 };
 
